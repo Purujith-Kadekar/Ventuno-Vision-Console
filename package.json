@@ -1,0 +1,20 @@
+{
+  "name": "ventuno-vision-webapp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Login-gated camera + vision console for the Ventuno Q desk assistant. Vercel-hosted; the board polls it to switch to the vision role and can relay frames.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "firebase-admin": "^14.5.0",
+    "next": "^14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

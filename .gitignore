@@ -1,0 +1,12 @@
+node_modules
+.next
+.vercel
+.DS_Store
+*.log
+
+# secrets - never commit
+.env
+.env.*
+!.env.example
+*firebase-adminsdk*.json
+serviceAccount*.json
