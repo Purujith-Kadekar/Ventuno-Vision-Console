@@ -11,7 +11,7 @@ export async function GET(req) {
     ok: true,
     app: 'ventuno-vision',
     // Bump this when the deployed code changes; it proves which build is live.
-    rev: 'store-fallback-1',
+    rev: 'live-camera-1',
     time: new Date().toISOString(),
     configured: configStatus(),
     store: storeStatus(),

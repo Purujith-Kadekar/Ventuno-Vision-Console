@@ -177,3 +177,41 @@ pre.json {
   background: #1e0d0d;
   color: #ffc4c4;
 }
+
+/* ---------- live camera ---------- */
+.video-box .overlay { z-index: 2; }
+.live-pill {
+  position: absolute; top: 0.7rem; left: 0.7rem; z-index: 3;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.65rem; border-radius: 999px;
+  background: rgba(6, 12, 18, 0.78); border: 1px solid var(--line);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+  backdrop-filter: blur(6px);
+}
+.live-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.live-pill.on { color: #eafff4; border-color: #1d4d38; }
+.live-pill.on .dot { background: var(--ok); animation: pulse 1.2s infinite; }
+
+.caption {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 3;
+  padding: 0.9rem; min-height: 3.4rem;
+  background: linear-gradient(0deg, rgba(4, 8, 12, 0.94), rgba(4, 8, 12, 0));
+  font-size: 0.96rem; line-height: 1.45;
+}
+.caption.empty { color: var(--muted); font-style: italic; }
+
+.feed { display: flex; flex-direction: column; gap: 0.55rem; max-height: 54vh; overflow: auto; }
+.feed-item {
+  background: #0e151e; border: 1px solid var(--line); border-radius: 10px;
+  padding: 0.6rem 0.7rem; display: flex; flex-direction: column; gap: 0.25rem;
+}
+.feed-item.bad { border-color: #5a2b2b; color: #ffc4c4; }
+
+.chips { display: inline-flex; gap: 0.3rem; flex-wrap: wrap; }
+.chip {
+  background: #0b2a3d; border: 1px solid #1b4f6b; color: #a9e2ff;
+  border-radius: 999px; padding: 0.05rem 0.45rem; font-size: 0.72rem;
+}
+
+button.primary.stop { background: linear-gradient(135deg, #ff8a5c, #ff5d5d); }

@@ -77,6 +77,7 @@ async function post(req) {
       // audio too large for the 1 MiB document is dropped; the text still arrives
       wav_b64: body.wav_b64 && String(body.wav_b64).length <= MAX_B64 ? body.wav_b64 : null,
       error: body.error ? String(body.error).slice(0, 500) : null,
+      detect: body.detect || null,
     });
     return Response.json({ ok: true }, { headers: NO_STORE });
   }
@@ -104,6 +105,10 @@ async function post(req) {
     prompt: String(body.prompt || '').slice(0, 2000),
     image_b64: String(body.image_b64),
     want_tts: !!body.want_tts,
+    // optional cheap detector run on the same frame (face | object)
+    detect_kind: ['face', 'object'].includes(body.detect_kind)
+      ? body.detect_kind : null,
+    max_tokens: Math.min(400, Math.max(32, Number(body.max_tokens) || 160)),
   });
   return Response.json({ ok: true, id }, { headers: NO_STORE });
 }
