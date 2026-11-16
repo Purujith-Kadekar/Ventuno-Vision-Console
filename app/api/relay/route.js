@@ -21,7 +21,23 @@ import { getSession, boardAuthorized } from '../../../lib/auth';
 const NO_STORE = { 'Cache-Control': 'no-store' };
 const MAX_B64 = 700_000;   // ~525 KB of binary; leaves headroom under 1 MiB
 
+// Never answer with an empty 500: the board needs a reason it can log.
+function failure(err) {
+  return Response.json({
+    ok: false,
+    error: String((err && err.message) || err || 'store unavailable'),
+  }, { status: 503, headers: NO_STORE });
+}
+
 export async function GET(req) {
+  try {
+    return await get(req);
+  } catch (err) {
+    return failure(err);
+  }
+}
+
+async function get(req) {
   const url = new URL(req.url);
   if (boardAuthorized(req) && url.searchParams.get('job') === '1') {
     const job = await takeJob();
@@ -38,6 +54,14 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
+  try {
+    return await post(req);
+  } catch (err) {
+    return failure(err);
+  }
+}
+
+async function post(req) {
   let body;
   try {
     body = await req.json();

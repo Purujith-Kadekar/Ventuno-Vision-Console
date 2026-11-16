@@ -20,15 +20,35 @@ import { getSession, boardAuthorized } from '../../../lib/auth';
 
 const NO_STORE = { 'Cache-Control': 'no-store' };
 
+// Never answer with an empty 500: the board needs a reason it can log.
+function failure(err) {
+  return Response.json({
+    ok: false,
+    error: String((err && err.message) || err || 'store unavailable'),
+  }, { status: 503, headers: NO_STORE });
+}
+
 export async function GET(req) {
-  if (!boardAuthorized(req) && !getSession(req)) {
-    return Response.json({ ok: false, error: 'unauthorized' }, { status: 401 });
+  try {
+    if (!boardAuthorized(req) && !getSession(req)) {
+      return Response.json({ ok: false, error: 'unauthorized' }, { status: 401 });
+    }
+    const state = await getState();
+    return Response.json({ ok: true, ...state }, { headers: NO_STORE });
+  } catch (err) {
+    return failure(err);
   }
-  const state = await getState();
-  return Response.json({ ok: true, ...state }, { headers: NO_STORE });
 }
 
 export async function POST(req) {
+  try {
+    return await post(req);
+  } catch (err) {
+    return failure(err);
+  }
+}
+
+async function post(req) {
   let body;
   try {
     body = await req.json();
